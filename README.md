@@ -1,5 +1,5 @@
-# NTUA ECE SAAS 2022 PROJECT
+# NTUA ECE SaaS 2022 Project
   
-## TEAM 19
+## Team 19
 
 Work in progress.
