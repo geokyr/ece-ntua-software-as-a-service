@@ -72,3 +72,5 @@ node_modules/
 configuration
 .DS_Store
 .vscode
+.firebase
+.firebaserc
