@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   try {
     // Creates the http request
     await axios
-      .get("http://localhost:3006/getATLFile")
+      .get("https://data-provider-hwoybovacq-ey.a.run.app/getATLFile")
       .then((response) => {
         // Creates temporary file
         fs.appendFile("tempFile.txt", response.data, function (err) {

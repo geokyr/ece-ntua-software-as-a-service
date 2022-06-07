@@ -5,18 +5,18 @@ require("../config/index.js");
 
 // Import routes
 const helloworld = require("./routes/helloworld");
-const updatePFDatabase = require("./routes/updatePFDatabase");
-const deletePFRecords = require("./routes/deletePFRecords");
+const updateFFDatabase = require("./routes/updateFFDatabase");
+const deleteFFRecords = require("./routes/deleteFFRecords");
 const basicAuthentication = require("./routes/basicAuthentication");
 
 // Tests the connectivity of the server
 app.get("/hello", helloworld);
 
 // updates the database
-app.post("/updatePFDatabase", basicAuthentication, updatePFDatabase);
+app.post("/updateFFDatabase", basicAuthentication, updateFFDatabase);
 
 // deleted the database
-app.delete("/deletePFRecords", deletePFRecords);
+app.delete("/deleteFFRecords", deleteFFRecords);
 
 // Server listens to a specific port for incoming requests
 app.listen(port, () => {

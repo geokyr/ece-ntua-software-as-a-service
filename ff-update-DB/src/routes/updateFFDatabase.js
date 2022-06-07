@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   try {
     // Creates the http request
    await axios
-      .get("http://localhost:3006/getFFFile")
+      .get("https://data-provider-hwoybovacq-ey.a.run.app/getFFFile")
       .then((response) => {
 
         // Creates temporary file
