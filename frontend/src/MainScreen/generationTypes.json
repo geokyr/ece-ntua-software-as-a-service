@@ -1,0 +1,13 @@
+[
+    { "name": "Natural gas", "ref": "Natural gas" },
+    { "name": "Coal", "ref": "Coal" },
+    { "name": "Oil", "ref": "Oil" },
+    { "name": "Hydro", "ref": "Hydro" },
+    { "name": "Nuclear", "ref": "Nuclear" },
+    { "name": "Solar", "ref": "Solar" },
+    { "name": "Wind", "ref": "Wind" },
+    { "name": "Geothermal", "ref": "Geothermal" },
+    { "name": "Biomass", "ref": "Biomass" },
+    { "name": "Waste", "ref": "Waste" },
+    { "name": "Other", "ref": "Other" }
+]

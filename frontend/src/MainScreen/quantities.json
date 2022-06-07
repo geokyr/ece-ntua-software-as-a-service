@@ -1,0 +1,5 @@
+[
+    { "name": "Actual total load", "ref": "Actual total load" },
+    { "name": "Generation per type", "ref": "Generation per type" },
+    { "name": "Cross border flows", "ref": "Cross border flows" }
+]
