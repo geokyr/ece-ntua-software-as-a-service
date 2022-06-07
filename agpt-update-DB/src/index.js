@@ -7,13 +7,14 @@ require("../config/index.js")
 const helloworld = require("./routes/helloworld")
 const updateAGPTDatabase = require("./routes/updateAGPTDatabase")
 const deleteAGPTRecords = require("./routes/deleteAGPTRecords")
+const basicAuthentication = require("./routes/basicAuthentication")
 
 
 // Tests the connectivity of the server
 app.get('/hello',helloworld)
 
 // Updates the database
-app.post('/updateAGPTDatabase',updateAGPTDatabase)
+app.post('/updateAGPTDatabase',basicAuthentication,updateAGPTDatabase)
 
 // Deletes the database
 app.delete('/deleteAGPTRecords',deleteAGPTRecords)
