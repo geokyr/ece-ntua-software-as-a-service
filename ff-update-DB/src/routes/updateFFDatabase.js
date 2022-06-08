@@ -14,23 +14,23 @@ let bulkWriter = db.bulkWriter();
 module.exports = async (req, res) => {
   try {
     // Creates the http request
-   await axios
+    await axios
       .get("https://data-provider-hwoybovacq-ey.a.run.app/getFFFile")
       .then((response) => {
-
+        
         // Creates temporary file
-        fs.appendFile("tempFile.txt", response.data, function (err) {
+        fs.appendFileSync("tempFile.txt", response.data, function (err) {
           if (err) throw err;
           console.log("File saved!");
         });
-    
+
         const coolPath = path.join(__dirname, "../../tempFile.txt");
         const data = [];
 
         // Initialize the stream
         const stream = fs
-        .createReadStream(coolPath)
-        .pipe(csv({ separator: "\t" }));
+          .createReadStream(coolPath)
+          .pipe(csv({ separator: "\t" }));
 
         // Error handling
         stream.on("error", (err) => {
@@ -66,7 +66,6 @@ module.exports = async (req, res) => {
         });
 
         stream.on("end", async () => {
-
           // Deletes the old documents from database
           await collectionRef.get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
@@ -76,6 +75,16 @@ module.exports = async (req, res) => {
             });
           });
 
+          // Flush bulkWriter
+          await bulkWriter
+            .flush()
+            .then(() => {
+              console.log("executed all writes");
+            })
+            .catch((e) => {
+              console.log("error in delete is:", e);
+            });
+
           // Inserts new documents into database with the updated documents
           data.forEach((doc) => {
             bulkWriter.create(collectionRef.doc(), doc).catch((e) => {
@@ -83,7 +92,7 @@ module.exports = async (req, res) => {
             });
           });
 
-          // Closes bulkWriter connection
+          // Flush bulkWriter
           await bulkWriter
             .flush()
             .then(() => {
@@ -94,13 +103,13 @@ module.exports = async (req, res) => {
             });
 
           // Deletes the temporary file
-          fs.unlink("tempFile.txt", function (err) {
+          fs.unlinkSync("tempFile.txt", function (err) {
             if (err) throw err;
             console.log("File deleted!");
           });
 
           // Sends status 200 if the request had success
-          res.status(200).send({"title":response.headers.title});
+          res.status(200).send({ title: response.headers.title });
         });
       })
       .catch((error) => {

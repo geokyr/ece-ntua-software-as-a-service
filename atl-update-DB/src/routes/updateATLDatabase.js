@@ -18,8 +18,9 @@ module.exports = async (req, res) => {
     await axios
       .get("https://data-provider-hwoybovacq-ey.a.run.app/getATLFile")
       .then((response) => {
+        
         // Creates temporary file
-        fs.appendFile("tempFile.txt", response.data, function (err) {
+        fs.appendFileSync("tempFile.txt", response.data, function (err) {
           if (err) throw err;
           console.log("File saved!");
         });
@@ -69,6 +70,16 @@ module.exports = async (req, res) => {
             });
           });
 
+          // Flush bulkWriter
+          await bulkWriter
+            .flush()
+            .then(() => {
+              console.log("executed all writes");
+            })
+            .catch((e) => {
+              console.log("error in delete is:", e);
+            });
+
           // Inserts new documents into database with the updated documents
           data.forEach((doc) => {
             bulkWriter.create(collectionRef.doc(), doc).catch((e) => {
@@ -76,7 +87,7 @@ module.exports = async (req, res) => {
             });
           });
 
-          // Closes bulkWriter connection
+          // Flush bulkWriter
           await bulkWriter
             .flush()
             .then(() => {
@@ -87,7 +98,7 @@ module.exports = async (req, res) => {
             });
 
           //Deletes the temporary file
-          fs.unlink("tempFile.txt", function (err) {
+          fs.unlinkSync("tempFile.txt", function (err) {
             if (err) throw err;
             console.log("File deleted!");
           });
@@ -104,10 +115,3 @@ module.exports = async (req, res) => {
     res.status(400).send(e);
   }
 };
-
-//////////////////////// NOTES ///////////////////////////
-
-// const coolPath = path.join(
-//   __dirname,
-//   "../../data/2022_01_01_01_ActualTotalLoad6.1.A.csv"
-// );
