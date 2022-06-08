@@ -44,6 +44,9 @@ function EditChartParameters() {
   const dataChart = useSelector(
     (state) => state.general.dataCharts[editChartIndex]
   );
+
+  useEffect(() =>  { console.log(dataChart) }, [dataChart]);
+  
   // const quantity = useRef(dataChart.quantity);
   const [quantity, setQuantity] = useState(dataChart.quantity);
   const dateFrom = useRef(moment(dataChart.dateFrom));
@@ -94,7 +97,32 @@ function EditChartParameters() {
 
   const saveChart = async () => {
     if (isAllFieldsSet()) {
+      let returnedData;
       console.log("dateFrom.current", dateFrom.current._d);
+      if (quantity === "Actual total load") {
+        console.log(countryFrom.current);
+         returnedData = await getATLData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current
+        );
+        console.log("returnedData ATL", returnedData);
+      } else if (quantity === "Generation per type") {
+         returnedData = await getAGPTData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current,
+          generationType.current
+        );
+      } else {
+         returnedData = await getFFData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current,
+          countryTo.current
+        );
+      }
+      console.log("returnedData", returnedData);
       dispatch(
         saveChartParams({
           quantity: quantity,
@@ -102,32 +130,10 @@ function EditChartParameters() {
           generationType: generationType.current,
           countryFrom: countryFrom.current,
           countryTo: countryTo.current,
-          data: [],
+          data: returnedData,
         })
       );
-      if (quantity === "Actual total load") {
-        console.log(countryFrom.current);
-        let returnedData = await getATLData(
-          auth.currentUser.accessToken,
-          dateFrom.current._d,
-          countryFrom.current
-        );
-        console.log("returnedData ATL", returnedData);
-      } else if (quantity === "Generation per type") {
-        let returnedData = await getAGPTData(
-          auth.currentUser.accessToken,
-          dateFrom.current._d,
-          countryFrom.current,
-          generationType.current
-        );
-      } else {
-        let returnedData = await getFFData(
-          auth.currentUser.accessToken,
-          dateFrom.current._d,
-          countryFrom.current,
-          countryTo.current
-        );
-      }
+
     } else alert("Please fill all fields");
   };
 

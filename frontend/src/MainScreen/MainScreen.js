@@ -323,6 +323,7 @@ function Main() {
             </Box>
           )}
           {dataCharts.map((chart, index) => {
+            console.log("chart", chart);
             return (
               <ChartBox
                 quantity={chart.quantity}
@@ -333,13 +334,15 @@ function Main() {
                     : "")
                 }
                 generationType={chart.generationType}
-                mode={
-                  !ready
-                    ? "loading"
-                    : compareDates(planEndingDate)
-                    ? "normal"
-                    : "extend"
-                }
+                data={chart.data}
+                // mode={
+                //   !ready
+                //     ? "loading"
+                //     : compareDates(planEndingDate)
+                //     ? "normal"
+                //     : "extend"
+                // }
+                mode={"normal"}
               />
             );
           })}

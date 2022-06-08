@@ -20,7 +20,7 @@ function preventDefault(event) {
     event.preventDefault();
 }
 
-export default function ChartBox({ quantity, country, generationType, mode }) {
+export default function ChartBox({ quantity, country, generationType, mode, data }) {
     const lastUpdateDate = new Date();
 
     return (
@@ -51,6 +51,7 @@ export default function ChartBox({ quantity, country, generationType, mode }) {
                     <Chart
                         quantity={quantity}
                         country={country}
+                        data={data}
                         generationType={generationType}
                     />
                 )}
