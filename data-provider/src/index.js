@@ -19,21 +19,21 @@ let FFIndex = 0;
 const ATLIndexUp = async (req, res) => {
     if (ATLIndex < 9) {
         ATLIndex++;
-    }
+    } else ATLIndex = 0;
     res.sendStatus(200);
 };
 
 const AGPTIndexUp = async (req, res) => {
     if (AGPTIndex < 9) {
         AGPTIndex++;
-    }
+    } else AGPTIndex = 0;
     res.sendStatus(200);
 };
 
 const FFIndexUp = async (req, res) => {
     if (FFIndex < 9) {
         FFIndex++;
-    }
+    } else FFIndex = 0;
     res.sendStatus(200);
 };
 
