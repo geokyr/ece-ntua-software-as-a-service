@@ -1,0 +1,19 @@
+{
+  "name": "brokeratlnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "node-cron": "^3.0.1",
+    "uuid": "^8.3.2"
+  }
+}
