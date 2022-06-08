@@ -13,11 +13,15 @@ module.exports = async (req, res) => {
       .where("DateTime", ">", new Date(req.body.dateFrom))
       .where("InMapCode", "==", req.body.InMapCode)
       .where("OutMapCode", "==", req.body.OutMapCode)
+      .orderBy("DateTime",'asc') // Sorts the data by date
       .get();
 
     // Loops through the data and pushes each Flow Value to the finalArray
     data.forEach((doc) => {
-      finalArray.push(doc.data().FlowValue);
+      let newObject = {}
+      newObject.time = new Date(doc.data().DateTime._seconds*1000)
+      newObject.amount = doc.data().FlowValue
+      finalArray.push(newObject);
     });
 
     // Sends the finalArray to the client

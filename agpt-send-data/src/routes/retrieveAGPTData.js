@@ -6,7 +6,6 @@ let collectionRef = db.collection("AggregatedGenerationPerType");
 
 module.exports = async (req, res) => {
   try {
-    console.log(req.body);
     // Initialize the array
     const finalArray = [];
     // Retrieves the data from the database depending on the date, map code and type of generation
@@ -14,12 +13,17 @@ module.exports = async (req, res) => {
       .where("DateTime", ">", new Date(req.body.dateFrom))
       .where("MapCode", "==", req.body.mapCode)
       .where("ProductionType", "==", req.body.productionType)
+      .orderBy("DateTime",'asc') // Sorts the data by date
       .get();
 
     // Loops through the data and pushes each AggregatedGenerationValue to the finalArray
     data.forEach((doc) => {
-      finalArray.push(doc.data().AggregatedGenerationValue);
+      let newObject = {}
+      newObject.time = new Date(doc.data().DateTime._seconds*1000)
+      newObject.amount = doc.data().AggregatedGenerationValue
+      finalArray.push(newObject);
     });
+    
 
     // Sends the finalArray to the client
     res.send(finalArray);

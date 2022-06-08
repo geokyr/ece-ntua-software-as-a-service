@@ -12,11 +12,15 @@ module.exports = async (req, res) => {
     const data = await collectionRef
       .where("DateTime", ">", new Date(req.body.dateFrom))
       .where("MapCode", "==", req.body.mapCode)
+      .orderBy("DateTime",'asc') // Sorts the data by date
       .get();
 
     // Loops through the data and pushes each totalLoadValue to the finalArray
     data.forEach((doc) => {
-      finalArray.push(doc.data().TotalLoadValue);
+      let newObject = {}
+      newObject.time = new Date(doc.data().DateTime._seconds*1000)
+      newObject.amount = doc.data().TotalLoadValue
+      finalArray.push(newObject);
     });
 
     // Sends the finalArray to the client

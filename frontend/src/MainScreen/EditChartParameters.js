@@ -25,221 +25,250 @@ import { styled } from "@mui/material/styles";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import {
-    deleteDataChart,
-    toggleEditScreen,
-    saveChartParams,
+  deleteDataChart,
+  toggleEditScreen,
+  saveChartParams,
 } from "../redux/actions/generalActions";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "./DateTimePicker";
 import Selector from "./Selector";
 import moment from "moment";
+import { getATLData, getAGPTData, getFFData } from "../fetchFunctions";
 const planEndDate = new Date("December 17, 2022 23:59:59");
 
 function EditChartParameters() {
-    const auth = useAuth();
-    const dispatch = useDispatch();
+  const auth = useAuth();
+  const dispatch = useDispatch();
 
-    const editChartIndex = useSelector((state) => state.general.editChartIndex);
-    const dataChart = useSelector(
-        (state) => state.general.dataCharts[editChartIndex]
-    );
-    // const quantity = useRef(dataChart.quantity);
-    const [quantity, setQuantity] = useState(dataChart.quantity);
-    const dateFrom = useRef(moment(dataChart.dateFrom));
-    const generationType = useRef(dataChart.generationType);
-    const countryFrom = useRef(dataChart.countryFrom);
-    const countryTo = useRef(dataChart.countryTo);
+  const editChartIndex = useSelector((state) => state.general.editChartIndex);
+  const dataChart = useSelector(
+    (state) => state.general.dataCharts[editChartIndex]
+  );
+  // const quantity = useRef(dataChart.quantity);
+  const [quantity, setQuantity] = useState(dataChart.quantity);
+  const dateFrom = useRef(moment(dataChart.dateFrom));
+  const generationType = useRef(dataChart.generationType);
+  const countryFrom = useRef(dataChart.countryFrom);
+  const countryTo = useRef(dataChart.countryTo);
 
-    const setDateFrom = (date) => {
-        dateFrom.current = date;
-    };
+  const setDateFrom = (date) => {
+    dateFrom.current = date;
+  };
 
-    const setGenerationType = (gt) => {
-        generationType.current = gt;
-    };
+  const setGenerationType = (gt) => {
+    generationType.current = gt;
+  };
 
-    const setCountryFrom = (ct) => {
-        countryFrom.current = ct;
-    };
+  const setCountryFrom = (ct) => {
+    countryFrom.current = ct;
+  };
 
-    const setCountryTo = (ct) => {
-        countryTo.current = ct;
-    };
+  const setCountryTo = (ct) => {
+    countryTo.current = ct;
+  };
 
-    const removeChart = (i) => {
-        dispatch(toggleEditScreen(-1));
-        dispatch(deleteDataChart(i));
-    };
+  const removeChart = (i) => {
+    dispatch(toggleEditScreen(-1));
+    dispatch(deleteDataChart(i));
+  };
 
-    //check if all fields are set
-    const isAllFieldsSet = () => {
-        if (
-            (quantity === "Actual total load" &&
-                dateFrom.current._isValid &&
-                countryFrom.current) ||
-            (quantity === "Generation per type" &&
-                dateFrom.current._isValid &&
-                generationType.current) ||
-            (quantity === "Cross border flows" &&
-                dateFrom.current._isValid &&
-                countryFrom.current &&
-                countryTo.current)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    };
+  //check if all fields are set
+  const isAllFieldsSet = () => {
+    if (
+      (quantity === "Actual total load" &&
+        dateFrom.current._isValid &&
+        countryFrom.current) ||
+      (quantity === "Generation per type" &&
+        dateFrom.current._isValid &&
+        generationType.current) ||
+      (quantity === "Cross border flows" &&
+        dateFrom.current._isValid &&
+        countryFrom.current &&
+        countryTo.current)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
-    const saveChart = () => {
-        if (isAllFieldsSet()) {
-            console.log("dateFrom.current", dateFrom.current._d);
-            dispatch(
-                saveChartParams({
-                    quantity: quantity,
-                    dateFrom: dateFrom.current,
-                    generationType: generationType.current,
-                    countryFrom: countryFrom.current,
-                    countryTo: countryTo.current,
-                    data: [],
-                })
-            );
-            // alert("Plan extended for " + extendDays + " days");
-        } else alert("Please fill all fields");
-    };
+  const saveChart = async () => {
+    if (isAllFieldsSet()) {
+      console.log("dateFrom.current", dateFrom.current._d);
+      dispatch(
+        saveChartParams({
+          quantity: quantity,
+          dateFrom: dateFrom.current,
+          generationType: generationType.current,
+          countryFrom: countryFrom.current,
+          countryTo: countryTo.current,
+          data: [],
+        })
+      );
+      if (quantity === "Actual total load") {
+        console.log(countryFrom.current);
+        let returnedData = await getATLData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current
+        );
+        console.log("returnedData ATL", returnedData);
+      } else if (quantity === "Generation per type") {
+        let returnedData = await getAGPTData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current,
+          generationType.current
+        );
+      } else {
+        let returnedData = await getFFData(
+          auth.currentUser.accessToken,
+          dateFrom.current._d,
+          countryFrom.current,
+          countryTo.current
+        );
+      }
+    } else alert("Please fill all fields");
+  };
 
-    return (
+  return (
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        // backgroundColor: "red",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      onClick={() => {
+        if (isAllFieldsSet()) dispatch(toggleEditScreen(-1));
+      }}
+    >
+      <Box
+        sx={{
+          px: 5,
+          py: 5,
+          minWidth: "50vw",
+          borderRadius: "10px",
+          position: "absolute",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: (theme) =>
+            theme.palette.mode == "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          borderColor: (t) =>
+            t.palette.mode === "dark"
+              ? t.palette.grey[300]
+              : t.palette.grey[900],
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Typography
+          component="h3"
+          variant="h4"
+          noWrap
+          sx={{
+            // flexGrow: 1,
+            float: "left",
+            // mb: 2,
+            // backgroundColor: "red",
+            textAlign: "left",
+            color: (t) =>
+              t.palette.mode === "dark"
+                ? t.palette.grey[300]
+                : t.palette.grey[900],
+          }}
+        >
+          LineChart {editChartIndex + 1} Parameters
+        </Typography>
+        <hr
+          style={{
+            width: "100%",
+            textAlign: "center",
+            marginLeft: 0,
+            marginBottom: 30,
+            marginTop: 30,
+          }}
+        ></hr>
+        <Stack spacing={2}>
+          <DateTimePicker
+            date={dateFrom.current}
+            setDate={(d) => setDateFrom(d)}
+          />
+          <Selector
+            propVal={quantity}
+            setPropVal={(q) => setQuantity(q)}
+            mode={"quantity"}
+          />
+
+          {quantity == "Actual total load" && (
+            <Selector
+              propVal={countryFrom.current}
+              setPropVal={(ct) => setCountryFrom(ct)}
+              mode={"country"}
+            />
+          )}
+
+          {quantity == "Generation per type" && (
+            <>
+              <Selector
+                propVal={countryFrom.current}
+                setPropVal={(ct) => setCountryFrom(ct)}
+                mode={"country"}
+              />
+              <Selector
+                propVal={generationType.current}
+                setPropVal={(gt) => setGenerationType(gt)}
+                mode={"generationType"}
+              />
+            </>
+          )}
+
+          {quantity == "Cross border flows" && (
+            <>
+              <Selector
+                propVal={countryFrom.current}
+                setPropVal={(ct) => setCountryFrom(ct)}
+                mode={"countryFrom"}
+              />
+              <Selector
+                propVal={countryTo.current}
+                setPropVal={(ct) => setCountryTo(ct)}
+                mode={"countryTo"}
+              />
+            </>
+          )}
+        </Stack>
         <Box
-            sx={{
-                width: "100vw",
-                height: "100vh",
-                // backgroundColor: "red",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-            onClick={() => {
-                if (isAllFieldsSet()) dispatch(toggleEditScreen(-1));
-            }}>
-            <Box
-                sx={{
-                    px: 5,
-                    py: 5,
-                    minWidth: "50vw",
-                    borderRadius: "10px",
-                    position: "absolute",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: (theme) =>
-                        theme.palette.mode == "light"
-                            ? theme.palette.grey[100]
-                            : theme.palette.grey[900],
-                    borderColor: (t) =>
-                        t.palette.mode === "dark"
-                            ? t.palette.grey[300]
-                            : t.palette.grey[900],
-                }}
-                onClick={(e) => e.stopPropagation()}>
-                <Typography
-                    component="h3"
-                    variant="h4"
-                    noWrap
-                    sx={{
-                        // flexGrow: 1,
-                        float: "left",
-                        // mb: 2,
-                        // backgroundColor: "red",
-                        textAlign: "left",
-                        color: (t) =>
-                            t.palette.mode === "dark"
-                                ? t.palette.grey[300]
-                                : t.palette.grey[900],
-                    }}>
-                    LineChart {editChartIndex + 1} Parameters
-                </Typography>
-                <hr
-                    style={{
-                        width: "100%",
-                        textAlign: "center",
-                        marginLeft: 0,
-                        marginBottom: 30,
-                        marginTop: 30,
-                    }}></hr>
-                <Stack spacing={2}>
-                    <DateTimePicker
-                        date={dateFrom.current}
-                        setDate={(d) => setDateFrom(d)}
-                    />
-                    <Selector
-                        propVal={quantity}
-                        setPropVal={(q) => setQuantity(q)}
-                        mode={"quantity"}
-                    />
-
-                    {quantity == "Actual total load" && (
-                        <Selector
-                            propVal={countryFrom.current}
-                            setPropVal={(ct) => setCountryFrom(ct)}
-                            mode={"country"}
-                        />
-                    )}
-
-                    {quantity == "Generation per type" && (
-                        <>
-                            <Selector
-                                propVal={countryFrom.current}
-                                setPropVal={(ct) => setCountryFrom(ct)}
-                                mode={"country"}
-                            />
-                            <Selector
-                                propVal={generationType.current}
-                                setPropVal={(gt) => setGenerationType(gt)}
-                                mode={"generationType"}
-                            />
-                        </>
-                    )}
-
-                    {quantity == "Cross border flows" && (
-                        <>
-                            <Selector
-                                propVal={countryFrom.current}
-                                setPropVal={(ct) => setCountryFrom(ct)}
-                                mode={"countryFrom"}
-                            />
-                            <Selector
-                                propVal={countryTo.current}
-                                setPropVal={(ct) => setCountryTo(ct)}
-                                mode={"countryTo"}
-                            />
-                        </>
-                    )}
-                </Stack>
-                <Box
-                    sx={{
-                        px: 3,
-                        mt: 2,
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        // backgroundColor: "red",
-                    }}>
-                    <Button onClick={saveChart} variant="contained">
-                        Save
-                    </Button>
-                    <Button
-                        onClick={() => removeChart(editChartIndex)}
-                        sx={{ ml: 2 }}
-                        variant="outlined">
-                        Cancel
-                    </Button>
-                </Box>
-            </Box>
+          sx={{
+            px: 3,
+            mt: 2,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            // backgroundColor: "red",
+          }}
+        >
+          <Button onClick={saveChart} variant="contained">
+            Save
+          </Button>
+          <Button
+            onClick={() => removeChart(editChartIndex)}
+            sx={{ ml: 2 }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
         </Box>
-    );
+      </Box>
+    </Box>
+  );
 }
 
 export default EditChartParameters;
