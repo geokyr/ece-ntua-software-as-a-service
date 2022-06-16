@@ -11,6 +11,11 @@ export const toggleTheme = () => ({
     type: "TOGGLE_THEME",
 });
 
+export const setEditChartIndex = (id) => ({
+    type: "SET_EDIT_CHART_INDEX",
+    payload: id,
+});
+
 export const toggleExtendScreen = () => ({
     type: "TOGGLE_EXTEND_SCREEN",
 });

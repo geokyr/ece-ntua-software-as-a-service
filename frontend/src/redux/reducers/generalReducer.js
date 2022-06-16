@@ -4,6 +4,7 @@ const DEFAULT_DATA_CHART = {
     generationType: "",
     countryFrom: "",
     countryTo: "",
+    lastUpdateDate: "",
     // data: [],
 };
 
@@ -51,14 +52,22 @@ const generalReducer = (state = INITIAL_STATE, action) => {
                 editScreenShown: !state.editScreenShown,
                 editChartIndex: action.payload,
             };
+        case "SET_EDIT_CHART_INDEX":
+            return {
+                ...state,
+                editChartIndex: action.payload,
+            };
         case "SAVE_CHART_PARAMS":
             let newDataCharts = [];
             // copy state.dataCharts in newDataCharts
             state.dataCharts.forEach((chart, i) => {
                 newDataCharts.push({ ...chart });
             });
-
             newDataCharts[state.editChartIndex] = action.payload;
+            console.log(
+                "NEW CHART SHOULD BE",
+                newDataCharts[state.editChartIndex]
+            );
 
             return {
                 ...state,
@@ -67,7 +76,6 @@ const generalReducer = (state = INITIAL_STATE, action) => {
                 editChartIndex: -1,
             };
         case "SET_PLAN_ENDING_DATE":
-            console.log("action.payload", action.payload);
             return {
                 ...state,
                 planEndingDate: action.payload,

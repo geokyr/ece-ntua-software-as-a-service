@@ -15,6 +15,8 @@ export default function BasicDateTimePicker({ date, setDate }) {
                 renderInput={(props) => <TextField {...props} />}
                 label="Date from:"
                 minDate={moment("January 1, 2022 00:00:00")}
+                maxDate={moment("January 12, 2022 00:00:00")}
+                defaultCalendarMonth={moment("January 1, 2022 00:00:00")}
                 disableFuture
                 value={value}
                 sx={{ width: "100%" }}

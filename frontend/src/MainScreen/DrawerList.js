@@ -52,8 +52,12 @@ export default function DrawerList() {
                     <ListItemText
                         primary={"LineChart " + (index + 1).toString()}
                     />
-                    <IconButton sx={{ mr: 1 }} edge="end" aria-label="comments">
-                        <EditIcon onClick={() => editChart(index)} />
+                    <IconButton
+                        onClick={() => editChart(index)}
+                        sx={{ mr: 1 }}
+                        edge="end"
+                        aria-label="comments">
+                        <EditIcon />
                     </IconButton>
                     <IconButton
                         onClick={() => removeChart(index)}
