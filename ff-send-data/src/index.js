@@ -9,12 +9,9 @@ app.use(cors());
 app.options("*", cors());
 
 // Import routes
-const helloworld = require("./routes/helloworld");
 const retrieveFFData = require("./routes/retrieveFFData");
 const authentication = require("./routes/authentication");
 
-// Tests the connectivity of the server
-app.get("/hello", helloworld);
 
 // Retrieves docs from the database
 app.post("/getFFData", authentication, retrieveFFData);

@@ -4,13 +4,17 @@ const port = process.env.PORT;
 require("../config/index.js");
 
 // Import routes
-const helloworld = require("./routes/helloworld");
 const updateFFDatabase = require("./routes/updateFFDatabase");
 const deleteFFRecords = require("./routes/deleteFFRecords");
 const basicAuthentication = require("./routes/basicAuthentication");
 
-// Tests the connectivity of the server
-app.get("/hello", helloworld);
+// Checks if there are old collections and then delete them
+function deleteFFRecordsfun() {
+  deleteFFRecords();
+}
+
+// Every one minute, delete the old collections
+setInterval(deleteFFRecordsfun, 60000);
 
 // updates the database
 app.post("/updateFFDatabase", basicAuthentication, updateFFDatabase);

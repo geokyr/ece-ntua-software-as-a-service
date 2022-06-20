@@ -8,7 +8,6 @@ app.use(cors());
 app.options("*", cors());
 
 // Import routes
-const helloworld = require("./routes/helloworld");
 const updateATLDatabase = require("./routes/updateATLDatabase");
 const deleteATLRecords = require("./routes/deleteATLRecords");
 const basicAuthentication = require("./routes/basicAuthentication");
@@ -21,11 +20,8 @@ function deleteATLRecordsfun() {
 // Every one minute, delete the old collections
 setInterval(deleteATLRecordsfun, 60000);
 
-// Tests the connectivity of the server
-app.get("/hello", helloworld);
-
 // Updates the database
-app.post("/updateATLDatabase", updateATLDatabase);
+app.post("/updateATLDatabase", basicAuthentication, updateATLDatabase);
 
 // Deletes the database
 app.delete("/deleteATLRecords", deleteATLRecords);

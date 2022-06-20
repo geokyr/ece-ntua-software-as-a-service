@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       .catch((error) => console.error(error));
 
     // Get the max value of indexes array
-    let suffix = Math.max(...indexes) + 1;
+    let suffix = indexes.length === 0 ? 1 : Math.max(...indexes) + 1;
     // Define the new collection name
     let newCollectionName = "ActualTotalLoad".concat(suffix);
     let collectionRef = db.collection(newCollectionName);

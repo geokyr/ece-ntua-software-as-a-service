@@ -5,19 +5,34 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 
-// Defines the collection of the firestore database
-let collectionRef = db.collection("PhysicalFlows");
-
-// Create a bulkWriter to handle writes
-let bulkWriter = db.bulkWriter();
-
 module.exports = async (req, res) => {
   try {
+    let indexes = [];
+    // Read the names of all collections in the database
+    await db
+      .listCollections()
+      .then((snapshot) => {
+        snapshot.forEach((snaps) => {
+          let q = snaps["_queryOptions"].collectionId;
+          // Check if the collection name includes the word PhysicalFlows
+          if (q.match(/^PhysicalFlows/)) {
+            // Pushes in indexes array the suffix number of all collections with a name like PhysicalFlows + number
+            indexes.push(parseInt(q.split("PhysicalFlows")[1]));
+          }
+        });
+      })
+      .catch((error) => console.error(error));
+
+    // Get the max value of indexes array
+    let suffix = indexes.length === 0 ? 1 : Math.max(...indexes) + 1;
+    // Define the new collection name
+    let newCollectionName = "PhysicalFlows".concat(suffix);
+    let collectionRef = db.collection(newCollectionName);
+
     // Creates the http request
     await axios
       .get("https://data-provider-hwoybovacq-ey.a.run.app/getFFFile")
       .then((response) => {
-        
         // Creates temporary file
         fs.appendFileSync("tempFile.txt", response.data, function (err) {
           if (err) throw err;
@@ -66,41 +81,26 @@ module.exports = async (req, res) => {
         });
 
         stream.on("end", async () => {
-          // Deletes the old documents from database
-          await collectionRef.get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-              bulkWriter.delete(doc.ref).catch((e) => {
-                console.log("error in delete is:", e);
-              });
-            });
-          });
+          
+          await ParallelBatchedWrites(data);
 
-          // Flush bulkWriter
-          await bulkWriter
-            .flush()
-            .then(() => {
-              console.log("executed all writes");
-            })
-            .catch((e) => {
-              console.log("error in delete is:", e);
-            });
-
-          // Inserts new documents into database with the updated documents
-          data.forEach((doc) => {
-            bulkWriter.create(collectionRef.doc(), doc).catch((e) => {
-              console.log("error in create is:", e);
-            });
-          });
-
-          // Flush bulkWriter
-          await bulkWriter
-            .flush()
-            .then(() => {
-              console.log("executed all writes");
-            })
-            .catch((e) => {
-              console.log("error in delete is:", e);
-            });
+          async function ParallelBatchedWrites(datas) {
+            let batches = [];
+            let batch = admin.firestore().batch();
+            let count = 0;
+            while (datas.length) {
+              batch.set(
+                collectionRef.doc(Math.random().toString(36).substring(2, 15)),
+                datas.shift()
+              );
+              if (++count >= 500 || !datas.length) {
+                batches.push(batch.commit());
+                batch = admin.firestore().batch();
+                count = 0;
+              }
+            }
+            await Promise.all(batches);
+          }
 
           // Deletes the temporary file
           fs.unlinkSync("tempFile.txt", function (err) {
@@ -120,3 +120,41 @@ module.exports = async (req, res) => {
     res.status(400).send(e);
   }
 };
+
+/////////////////////////////////////////////////OLD CODE//////////////////////////////////////////////////////////////
+
+// Deletes the old documents from database
+//  await collectionRef.get().then(function (querySnapshot) {
+//   querySnapshot.forEach(function (doc) {
+//     bulkWriter.delete(doc.ref).catch((e) => {
+//       console.log("error in delete is:", e);
+//     });
+//   });
+// });
+
+// // Flush bulkWriter
+// await bulkWriter
+//   .flush()
+//   .then(() => {
+//     console.log("executed all writes");
+//   })
+//   .catch((e) => {
+//     console.log("error in delete is:", e);
+//   });
+
+// // Inserts new documents into database with the updated documents
+// data.forEach((doc) => {
+//   bulkWriter.create(collectionRef.doc(), doc).catch((e) => {
+//     console.log("error in create is:", e);
+//   });
+// });
+
+// // Flush bulkWriter
+// await bulkWriter
+//   .flush()
+//   .then(() => {
+//     console.log("executed all writes");
+//   })
+//   .catch((e) => {
+//     console.log("error in delete is:", e);
+//   });
