@@ -25,7 +25,7 @@ setInterval(deleteATLRecordsfun, 60000);
 app.get("/hello", helloworld);
 
 // Updates the database
-app.post("/updateATLDatabase", basicAuthentication, updateATLDatabase);
+app.post("/updateATLDatabase", updateATLDatabase);
 
 // Deletes the database
 app.delete("/deleteATLRecords", deleteATLRecords);

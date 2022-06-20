@@ -76,7 +76,7 @@ module.exports = async (req, res) => {
 
         stream.on("end", async () => {
 
-          await ParallelBatchedWrites(JSON.parse(JSON.stringify(data)));
+          await ParallelBatchedWrites(data);
 
           async function ParallelBatchedWrites(datas) {
             let batches = [];

@@ -24,24 +24,30 @@ module.exports = async (req, res) => {
     // Define the new collection name
     let newCollectionName = "ActualTotalLoad".concat(suffix);
     let collectionRef = db.collection(newCollectionName);
-    
+
     // Initialize the array
     const finalArray = [];
 
     // Retrieves the data from the database depending on the date and map code
     const data = await collectionRef
       .where("DateTime", ">", new Date(req.body.dateFrom))
-      .where("MapCode", "==", req.body.mapCode)
-      .orderBy("DateTime", "asc") // Sorts the data by date
       .get();
 
     // Loops through the data and pushes each totalLoadValue to the finalArray
     data.forEach((doc) => {
-      let newObject = {};
-      newObject.time = new Date(doc.data().DateTime._seconds * 1000);
-      newObject.amount = doc.data().TotalLoadValue;
-      finalArray.push(newObject);
+      // Checks if the map code is the same as the one in the request 
+      if (doc.data().MapCode === req.body.mapCode) {
+        let newObject = {};
+        newObject.time = new Date(doc.data().DateTime._seconds * 1000);
+        newObject.amount = doc.data().TotalLoadValue;
+        finalArray.push(newObject);
+      }
     });
+
+    // Order finalArray by time
+    finalArray.sort((a, b) => {
+      return a.time - b.time;
+    })
 
     // Sends the finalArray to the client
     res.send(finalArray);
