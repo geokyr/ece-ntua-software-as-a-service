@@ -17,7 +17,7 @@ function deleteATLRecordsfun() {
   deleteATLRecords();
 }
 
-setInterval(deleteATLRecordsfun, 40000);
+setInterval(deleteATLRecordsfun, 5000);
 
 // Tests the connectivity of the server
 app.get("/hello", helloworld);

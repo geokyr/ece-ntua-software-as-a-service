@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
           let q = snaps["_queryOptions"].collectionId;
           // Check if the collection name includes the word ActualTotalLoad
           if (q.match(/^ActualTotalLoad/)) {
+            console.log('inside if')
             // Pushes in indexes array the suffix number of all collections with a name like ActualTotalLoad + number
             indexes.push(parseInt(q.split("ActualTotalLoad")[1]));
           }
@@ -21,16 +22,17 @@ module.exports = async (req, res) => {
       .catch((error) => {
         throw new Error()
       });
-
+      console.log('indexes list is:', indexes)
     // If there are old collections then delete them
     if (indexes.length > 1) {
       // Remove from indexes array the largest value that corresponds to the last updated collection
       const max = Math.max(...indexes);
-      indexes.filter((index) => index !== max);
-
+      console.log('max element is',max)
+      let newIndexes = indexes.filter((index) => index !== max);
+      console.log('new list is',newIndexes)
       // loop through all indexes except the last one
-      for (let i = 0; i < indexes.length - 1; i++) {
-        let collectionRef = db.collection("ActualTotalLoad" + indexes[i]);
+      for (let i = 0; i < newIndexes.length; i++) {
+        let collectionRef = db.collection("ActualTotalLoad" + newIndexes[i]);
 
         // [START delete_collection]
         await deleteCollection(500);
