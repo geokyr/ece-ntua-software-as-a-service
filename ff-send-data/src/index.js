@@ -17,7 +17,7 @@ const authentication = require("./routes/authentication");
 app.get("/hello", helloworld);
 
 // Retrieves docs from the database
-app.get("/getFFData", authentication, retrieveFFData);
+app.post("/getFFData", authentication, retrieveFFData);
 
 // Server listens to a specific port for incoming requests
 app.listen(port, () => {

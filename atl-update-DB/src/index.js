@@ -13,18 +13,20 @@ const updateATLDatabase = require("./routes/updateATLDatabase");
 const deleteATLRecords = require("./routes/deleteATLRecords");
 const basicAuthentication = require("./routes/basicAuthentication");
 
+// Checks if there are old collections and then delete them
 function deleteATLRecordsfun() {
   deleteATLRecords();
 }
 
-setInterval(deleteATLRecordsfun, 5000);
+// Every one minute, delete the old collections
+setInterval(deleteATLRecordsfun, 60000);
 
 // Tests the connectivity of the server
 app.get("/hello", helloworld);
 
 // Updates the database
-app.post("/updateATLDatabase", updateATLDatabase);
-// basicAuthentication
+app.post("/updateATLDatabase", basicAuthentication, updateATLDatabase);
+
 // Deletes the database
 app.delete("/deleteATLRecords", deleteATLRecords);
 

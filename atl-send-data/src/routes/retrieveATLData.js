@@ -1,25 +1,45 @@
 let admin = require("firebase-admin");
 const db = admin.firestore();
 
-// Defines the collection of the firestore database
-let collectionRef = db.collection("ActualTotalLoad");
-
 module.exports = async (req, res) => {
   try {
+    let indexes = [];
+    // Read the names of all collections in the database
+    await db
+      .listCollections()
+      .then((snapshot) => {
+        snapshot.forEach((snaps) => {
+          let q = snaps["_queryOptions"].collectionId;
+          // Check if the collection name includes the word ActualTotalLoad
+          if (q.match(/^ActualTotalLoad/)) {
+            // Pushes in indexes array the suffix number of all collections with a name like ActualTotalLoad + number
+            indexes.push(parseInt(q.split("ActualTotalLoad")[1]));
+          }
+        });
+      })
+      .catch((error) => console.error(error));
+
+    // Get the max value of indexes array
+    let suffix = Math.max(...indexes);
+    // Define the new collection name
+    let newCollectionName = "ActualTotalLoad".concat(suffix);
+    let collectionRef = db.collection(newCollectionName);
+    
     // Initialize the array
     const finalArray = [];
+
     // Retrieves the data from the database depending on the date and map code
     const data = await collectionRef
       .where("DateTime", ">", new Date(req.body.dateFrom))
       .where("MapCode", "==", req.body.mapCode)
-      .orderBy("DateTime",'asc') // Sorts the data by date
+      .orderBy("DateTime", "asc") // Sorts the data by date
       .get();
 
     // Loops through the data and pushes each totalLoadValue to the finalArray
     data.forEach((doc) => {
-      let newObject = {}
-      newObject.time = new Date(doc.data().DateTime._seconds*1000)
-      newObject.amount = doc.data().TotalLoadValue
+      let newObject = {};
+      newObject.time = new Date(doc.data().DateTime._seconds * 1000);
+      newObject.amount = doc.data().TotalLoadValue;
       finalArray.push(newObject);
     });
 
