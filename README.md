@@ -1,10 +1,12 @@
 # NTUA ECE SaaS 2022 Project
   
-## Energy Live 2022 - Team 19
+## Energy Live 2022
 
-[**This is our project**](https://saas2022-19.web.app/main) for the Software as a Service course of the 8th semester at the National Technical University of Athens. 
+[**Link to our web application**](https://saas2022-19.web.app/main)
 
-## Team Members
+This is our project for the Software as a Service course of the 8th semester at the National Technical University of Athens.
+
+## Team 19 - Members
 
 * [**Angelis Georgios**](https://github.com/ag-george)
 * [**Garos Apostolis**](https://github.com/ApostolisGaros)
@@ -28,7 +30,25 @@ We have developed a SaaS web application, called Energy Live 2022, that allows u
 For the development of the application, we used the following tools:
 
 * Design and architecture: **Visual Paradigm CE**
-* Development: **Node.js**, **Express.js**, **React.js**, **Recharts**, **Firebase**, **Cloud Firestore**
+* Development: **Node.js**, **Express.js**, **React.js**, **Recharts**, **Google Firebase**
 * Source code and agile project management: **GitHub**
-* Deployment: **Google Cloud Run**
-* Testing: **jMeter*** Agile project management: **GitHub**
+* Deployment: **Google Cloud Firestore**, **Google Firebase Hosting**, **Google Cloud Run**
+* Testing: **jMeter**
+
+## Agile Software Development
+
+For the development of our web application, we used the Scrum framework. The development was split into 3 main sprints (as shown on our [GitHub Projects page](https://github.com/ntua/saas2022-19/projects?query=is%3Aclosed&type=classic)).
+
+The initial sprint had, mostly, to do with the architecture of our project and the listing of the different microservices needed. The second sprint was dedicated to the development of the application's codebase, as well as an initial deployment of the various microservices on the cloud. During the third sprint we made our final touches or changes to the codebase and architecture, while performing the testing of our application, after it had been redeployed on the cloud.
+
+## Deployment
+
+We used Google Cloud Firestore, Google Firebase Hosting and Google Cloud Run to deploy components of our project.
+
+The NoSQL database is deployed on the Google Cloud Firestore. Our data is stored, updated and retrieved through the useful tools provided by the framework, using the Node.js SDK.
+
+The web application is deployed on Google Firebase Hosting. The link of our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#energy-live-2022).
+
+The microservices were deployed on the Google Cloud Run service. Each microservice was deployed as a separate service, inside a container and running on a specific port, specified in the ```config/dev.env``` PORT variable. This was done through the GCloud CLI using the following command for every microservice (region is set to "europe-west3"):
+
+```$ gcloud run deploy --source microservice-directory --port PORT```
