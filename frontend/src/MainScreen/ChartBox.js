@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback, forwardRef, useRef, useImperativeHandle } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -39,6 +40,8 @@ export default function ChartBox({
     const dispatch = useDispatch();
 
     const refreshChart = async () => {
+        console.log("auth.user.token", auth.currentUser.accessToken);
+
         let returnedData;
         if (quantity === "Actual total load") {
             returnedData = await getATLData(
@@ -61,8 +64,9 @@ export default function ChartBox({
                 props.countryTo
             );
         }
-        console.log("returnedData", returnedData);
+
         await dispatch(setEditChartIndex(props.index));
+
         dispatch(
             saveChartParams({
                 quantity: quantity,
@@ -76,7 +80,48 @@ export default function ChartBox({
         );
     };
 
-    // const lastUpdateDate = new Date();
+    const downloadFile = ({ data, fileName, fileType }) => {
+        const blob = new Blob([data], { type: fileType });
+
+        const a = document.createElement("a");
+        a.download = fileName;
+        a.href = window.URL.createObjectURL(blob);
+        const clickEvt = new MouseEvent("click", {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+        });
+        a.dispatchEvent(clickEvt);
+        a.remove();
+    };
+
+    const exportToCsv = (e) => {
+        // console.log("data to csv", data);
+        e.preventDefault();
+
+        // Headers for each column
+        let headers = ["timestamp,amount"];
+
+        // Convert users data to a csv
+        let dataCsv = data.reduce((acc, data) => {
+            const { time, amount } = data;
+            acc.push([time, amount].join(","));
+            return acc;
+        }, []);
+
+        downloadFile({
+            data: [...headers, ...dataCsv].join("\n"),
+            fileName: `${quantity.replace(/\s+/g, "_")}_${country.replace(
+                /\s+/g,
+                "_"
+            )}_${generationType.replace(/\s+/g, "_")}_${moment(dateFrom).format(
+                "DD_MM_YYYY_h:mm"
+            )}.csv`,
+            fileType: "text/csv",
+        });
+    };
+
+    const childRef = useRef();
 
     return (
         <Grid item xs={12} md={8} lg={9}>
@@ -107,7 +152,9 @@ export default function ChartBox({
                         quantity={quantity}
                         country={country}
                         data={data}
+                        dateFrom={dateFrom}
                         generationType={generationType}
+                        ref={childRef}
                     />
                 )}
                 <Box
@@ -152,10 +199,19 @@ export default function ChartBox({
                         // overflow: "auto",
                         // backgroundColor: "red",
                     }}>
-                    <Button sx={{ mr: 4 }} variant="outlined">
+                    <Button
+                        disabled={data?.length === 0 || mode !== "normal"}
+                        onClick={() => childRef.current.downloadPng()}
+                        sx={{ mr: 4 }}
+                        variant="outlined">
                         Download image
                     </Button>
-                    <Button variant="outlined">Download Data</Button>
+                    <Button
+                        disabled={data?.length === 0 || mode !== "normal"}
+                        onClick={exportToCsv}
+                        variant="outlined">
+                        Download Data
+                    </Button>
                 </Box>
             </Paper>
         </Grid>

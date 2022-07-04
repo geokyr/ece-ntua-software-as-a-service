@@ -9,7 +9,7 @@ const DEFAULT_DATA_CHART = {
 };
 
 const INITIAL_STATE = {
-    dataCharts: [DEFAULT_DATA_CHART],
+    dataCharts: [],
     theme: "dark",
     extendScreenShown: false,
     editScreenShown: false,
@@ -64,10 +64,6 @@ const generalReducer = (state = INITIAL_STATE, action) => {
                 newDataCharts.push({ ...chart });
             });
             newDataCharts[state.editChartIndex] = action.payload;
-            console.log(
-                "NEW CHART SHOULD BE",
-                newDataCharts[state.editChartIndex]
-            );
 
             return {
                 ...state,

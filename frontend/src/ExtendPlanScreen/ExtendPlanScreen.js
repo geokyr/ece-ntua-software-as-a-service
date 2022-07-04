@@ -141,11 +141,16 @@ function ExtendPlanScreen() {
     const extendPlanClick = () => {
         if (extendDays > 0) {
             dispatch(toggleExtendScreen());
-            extendPlan(auth.currentUser.accessToken, extendDays).then((res) => {
-                dispatch(setPlanEndingDate(res.finalDate));
+            extendPlan(auth.currentUser.accessToken, extendDays)
+                .then((res) => {
+                    dispatch(setPlanEndingDate(res.finalDate));
 
-                alert("Plan extended by " + extendDays + " days");
-            });
+                    alert("Plan extended by " + extendDays + " days");
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Error extending plan");
+                });
         } else alert("extend days must be greater than 0");
     };
 

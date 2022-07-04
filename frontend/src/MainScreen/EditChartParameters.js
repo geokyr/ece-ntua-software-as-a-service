@@ -44,10 +44,6 @@ function EditChartParameters() {
         (state) => state.general.dataCharts[editChartIndex]
     );
 
-    useEffect(() => {
-        console.log(dataChart);
-    }, [dataChart]);
-
     // const quantity = useRef(dataChart.quantity);
     const [quantity, setQuantity] = useState(dataChart.quantity);
     const dateFrom = useRef(moment(dataChart.dateFrom));
@@ -109,7 +105,6 @@ function EditChartParameters() {
             // dispatch(toggleEditScreen(-1));
             let returnedData;
             if (quantity === "Actual total load") {
-                console.log(countryFrom.current);
                 returnedData = await getATLData(
                     auth.currentUser.accessToken,
                     dateFrom.current._d,
@@ -130,7 +125,6 @@ function EditChartParameters() {
                     countryTo.current
                 );
             }
-            console.log("returnedData", returnedData);
             dispatch(
                 saveChartParams({
                     quantity: quantity,

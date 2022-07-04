@@ -60,7 +60,6 @@ function SignInScreen() {
 
     useEffect(() => {
         // Listen to the Firebase Auth state and set the local state.
-        console.log("auth", auth);
         setIsSignedIn(!!auth.currentUser);
     }, [auth]);
 

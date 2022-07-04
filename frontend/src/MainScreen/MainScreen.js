@@ -148,8 +148,6 @@ function Main() {
         // }, 1000);
         getUserData(currentUser.accessToken)
             .then((data) => {
-                console.log("userData", data);
-
                 dispatch(setPlanEndingDate(data.expirationDate));
                 setReady(true);
             })
@@ -168,8 +166,6 @@ function Main() {
             return countryFound.name;
         } else return "";
     };
-
-    console.log("DATACHARTS", dataCharts);
 
     return (
         <Box sx={{ display: "flex", width: "100%" }}>
@@ -322,7 +318,6 @@ function Main() {
                         </Box>
                     )}
                     {dataCharts.map((chart, index) => {
-                        console.log("chart in main screen", chart);
                         return (
                             <ChartBox
                                 key={index}
@@ -330,24 +325,28 @@ function Main() {
                                 quantity={chart.quantity}
                                 country={
                                     getCountryName(chart.countryFrom) +
-                                    (chart.countryTo
+                                    (chart.quantity == "Cross border flows"
                                         ? "->" + getCountryName(chart.countryTo)
                                         : "")
                                 }
-                                generationType={chart.generationType}
+                                generationType={
+                                    chart.quantity == "Generation per type"
+                                        ? chart.generationType
+                                        : ""
+                                }
                                 data={chart.data}
                                 countryFrom={chart.countryFrom}
                                 countryTo={chart.countryTo}
                                 dateFrom={chart.dateFrom}
                                 lastUpdateDate={chart.lastUpdateDate}
-                                // mode={
-                                //     !ready
-                                //         ? "loading"
-                                //         : compareDates(planEndingDate)
-                                //         ? "normal"
-                                //         : "extend"
-                                // }
-                                mode={"normal"}
+                                mode={
+                                    !ready
+                                        ? "loading"
+                                        : compareDates(planEndingDate)
+                                        ? "normal"
+                                        : "extend"
+                                }
+                                // mode={"normal"}
                             />
                         );
                     })}
