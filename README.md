@@ -45,7 +45,7 @@ We used Google Cloud Firestore, Google Firebase Hosting and Google Cloud Run to 
 
 The NoSQL database is deployed on the Google Cloud Firestore. Our data is stored, updated and retrieved through the useful tools provided by the framework, using the Node.js SDK.
 
-The web application is deployed on Google Firebase Hosting. The link of our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#energy-live-2022). This was done through the Firebase CLI using the following commands under the ```/frontend``` directory:
+The web application is deployed on Google Firebase Hosting. The link of our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#ntua-ece-saas-2022-project). This was done through the Firebase CLI using the following commands under the ```/frontend``` directory:
 
 ```
 $ firebase init
