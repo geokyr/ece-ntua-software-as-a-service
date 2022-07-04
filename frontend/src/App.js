@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import MainScreen from "./MainScreen/MainScreen";
@@ -28,6 +28,11 @@ const lightTheme = createTheme({
 
 function App() {
     const theme = useSelector((state) => state.general.theme);
+
+    // Set head title
+    useEffect(() => {
+        document.title = "Energy Live 2022";
+    }, []);
 
     return (
         <ThemeProvider theme={theme === "light" ? darkTheme : lightTheme}>
