@@ -1,8 +1,6 @@
 # NTUA ECE SaaS 2022 Project
   
-## Energy Live 2022
-
-[**The web application is available here**](https://saas2022-19.web.app)
+[**Energy Live 2022**](https://saas2022-19.web.app)
 
 This is our project for the Software as a Service course of the 8th semester at the National Technical University of Athens.
 
