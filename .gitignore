@@ -74,3 +74,4 @@ configuration
 .vscode
 .firebase
 .firebaserc
+.bak_*
