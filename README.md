@@ -2,7 +2,7 @@
   
 ## Energy Live 2022
 
-[**Link to our web application**](https://saas2022-19.web.app)
+[**The web application is available here**](https://saas2022-19.web.app)
 
 This is our project for the Software as a Service course of the 8th semester at the National Technical University of Athens.
 
@@ -47,8 +47,15 @@ We used Google Cloud Firestore, Google Firebase Hosting and Google Cloud Run to 
 
 The NoSQL database is deployed on the Google Cloud Firestore. Our data is stored, updated and retrieved through the useful tools provided by the framework, using the Node.js SDK.
 
-The web application is deployed on Google Firebase Hosting. The link of our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#energy-live-2022).
+The web application is deployed on Google Firebase Hosting. The link of our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#energy-live-2022). This was done through the Firebase CLI using the following commands under the ```/frontend``` directory:
 
-The microservices were deployed on the Google Cloud Run service. Each microservice was deployed as a separate service, inside a container and running on a specific port, specified in each ```microservice-directory/config/dev.env``` PORT variable. This was done through the GCloud CLI using the following command for each microservice (region is set to "europe-west3"):
+```
+$ firebase init
+$ firebase deploy
+```
 
-```$ gcloud run deploy --source microservice-directory --port PORT```
+The microservices were deployed on the Google Cloud Run service. Each microservice was deployed as a separate service, inside a container and running on a specific port, specified in each ```/microservice-directory/config/dev.env``` PORT variable. This was done through the GCloud CLI using the following command for each microservice (region is set to "europe-west3"):
+
+```
+$ gcloud run deploy --source microservice-directory --port PORT
+```
