@@ -74,4 +74,4 @@ configuration
 .vscode
 .firebase
 .firebaserc
-.vpp.*
+*.vpp.*
