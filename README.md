@@ -1,4 +1,4 @@
-# NTUA ECE SaaS 2022 Project
+# NTUA ECE Software as a Service 2022 Project
   
 [**Energy Live 2022**](https://saas2022-19.web.app)
 
