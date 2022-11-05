@@ -31,7 +31,7 @@ For the development of the application, we used the following tools:
 * Testing: **jMeter**
 
 ## Agile Software Development
-For the development of our web application, we used the Scrum framework. The development was split into 3 main sprints (as shown on our [GitHub Projects page](https://github.com/ntua/saas2022-19/projects?query=is%3Aclosed&type=classic)).
+For the development of our web application, we used the Scrum framework. The development was split into 3 main sprints.
 
 The initial sprint had, mostly, to do with the architecture of our project and the listing of the different microservices needed. The second sprint was dedicated to the development of the application's codebase, as well as an initial deployment of the various microservices on the cloud. During the third sprint we made our final touches or changes to the codebase and architecture, while performing the testing of our application, after it had been redeployed on the cloud.
 
@@ -40,7 +40,7 @@ We used Google Cloud Firestore, Google Firebase Hosting and Google Cloud Run to 
 
 The NoSQL database is deployed on the Google Cloud Firestore. Our data is stored, updated and retrieved through the useful tools provided by the framework, using the Node.js SDK.
 
-The web application is deployed on Google Firebase Hosting. The link for our web application is provided on the [start of this README](https://github.com/ntua/saas2022-19#ntua-ece-saas-2022-project). This was done through the Firebase CLI (and npm) using the following commands under the ```/frontend``` directory:
+The web application is deployed on Google Firebase Hosting. The link for our web application is provided on the [start of this README](https://github.com/geokyr/saas2022-19#ntua-ece-software-as-a-service-2022-project). This was done through the Firebase CLI (and npm) using the following commands under the ```/frontend``` directory:
 
 ```
 $ firebase init
