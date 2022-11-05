@@ -62,7 +62,7 @@ $ gcloud run deploy --source microservice-directory --port PORT
 
 ## Setup - Keys
 
-For the SDK Setup, find the `firebase.js` under `/frontend/src/Firebase`, and edit the config base on the app configuration found [here](https://console.firebase.google.com/u/0/project/saas2022-19/settings/general/web:NmNjNTk5MDEtNThkNi00ZjBjLTg1MzEtM2FmNjdmNThhODhj).
+For the SDK Setup, find the `firebase.js` under `/frontend/src/Firebase`, and edit the config based on the app configuration found [here](https://console.firebase.google.com/u/0/project/saas2022-19/settings/general/web:NmNjNTk5MDEtNThkNi00ZjBjLTg1MzEtM2FmNjdmNThhODhj).
 
 For the Firebase Admin SDK, generate a new private key [here](https://console.firebase.google.com/u/0/project/saas2022-19/settings/serviceaccounts/adminsdk) and place it under the following folders:
 * `/agpt-send-data/config/`
