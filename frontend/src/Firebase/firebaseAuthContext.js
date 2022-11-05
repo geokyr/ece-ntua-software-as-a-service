@@ -56,22 +56,6 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
-    // useEffect(() => {
-    //     const unsub = onIdTokenChanged(auth, (change) => {
-    //         // console.log("onIDtoken changed", change);
-    //         // console.log(
-    //         //     "currentUser",
-    //         //     currentUser === change?.user,
-    //         //     currentUser,
-    //         //     change
-    //         // );
-    //         setCurrentUser(change);
-    //         setLoading(false);
-    //     });
-
-    //     return unsub;
-    // }, []);
-
     const value = {
         currentUser,
         login,
