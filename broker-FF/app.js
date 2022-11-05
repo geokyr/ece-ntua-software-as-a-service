@@ -8,13 +8,11 @@ const port = 3022;
 let flag = true;
 
 async function job() {
-  //console.log("flag", flag)
   if (flag) {
     fs.readFile("tr_id_FF.txt", "utf8", async (err, data) => {
       if (err) {
         return console.error(err);
       }
-      //console.log("filename from local storage:", data);
 
       let params = {
         fileName: data,
@@ -24,31 +22,19 @@ async function job() {
       try {//////
         r = await axios.post(
           "https://data-provider-hwoybovacq-ey.a.run.app/checkNewFFFile",
-          //"http://localhost:3006/checkNewFFFile",
           params
         );
       } catch (err) {
         console.log("checking new data error:", err);
       }
 
-  
-      //console.log("----")
-      // .then(res => {
-      //     console.log(res.data)
-      // });
-      //console.log(r.data);
       if (r.data == true) {
         flag = false;
         console.log("updating db...");
-        //console.log("ok")
-        // let r2 = await axios.post(
-        //   "https://actual-total-load-hwoybovacq-ey.a.run.app/updateDatabase"
-        // );
         let r2;
         try {
           r2 = await axios.post(
             "https://ff-update-db-hwoybovacq-ey.a.run.app/updateFFDatabase",
-            //"http://localhost:3005/updateFFDatabase",
             {},
             {
               headers: {
@@ -61,11 +47,6 @@ async function job() {
         } catch (err) {
           console.log("checking error ft. vlachakis: ", err);
         }
-        //console.log("point 1 reached")
-        //console.log(r2?.data);
-        //console.log("returned from nick's api title:", r2.data["title"]);
-        //console.log(JSON.parse(r2.data));
-        //console.log("now we ask vlach to change")
 
         if (r2?.data) {
           fs.writeFile("tr_id_FF.txt", r2.data["title"], (err, data) => {
@@ -78,10 +59,6 @@ async function job() {
         else {
           flag = true;
         }
-
-        // // fs.readFile('tr_id_ATL.txt', 'utf8', (err, data) => {
-        //     console.log(data)
-        // });
       }
     });
   }

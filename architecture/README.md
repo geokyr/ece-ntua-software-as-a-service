@@ -1,6 +1,6 @@
 # architecture
 
-Περιέχει ένα αρχείο Visual Paradigm που περιέχει τα παρακάτω διαγράμματα:
+The architecture documentation includes the following diagrams:
 * Entity Relationship Diagram
 * Class Diagram
 * Component Diagram

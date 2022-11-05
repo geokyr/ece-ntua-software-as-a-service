@@ -52,7 +52,7 @@ const AllIndexesUp = async (req, res) => {
     res.sendStatus(200);
 };
 
-// create middleware to get ATLIndex
+// Create middleware to get ATLIndex
 app.use((req, res, next) => {
     req.ATLIndex = ATLIndex;
     req.FFIndex = FFIndex;

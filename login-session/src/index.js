@@ -9,7 +9,6 @@ const helloworld = require("./routes/helloworld")
 const loginSession = require("./routes/loginSession")
 const authentication = require("./routes/authentication")
 
-
 // Tests the connectivity of the server
 app.get('/hello',helloworld)
 

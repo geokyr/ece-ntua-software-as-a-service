@@ -12,7 +12,6 @@ app.options("*", cors());
 const retrieveFFData = require("./routes/retrieveFFData");
 const authentication = require("./routes/authentication");
 
-
 // Retrieves docs from the database
 app.post("/getFFData", authentication, retrieveFFData);
 

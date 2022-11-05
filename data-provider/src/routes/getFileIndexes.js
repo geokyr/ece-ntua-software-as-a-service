@@ -1,4 +1,4 @@
-//body of each endpoint
+// Body of each endpoint
 module.exports = async (req, res) => {
     res.send({
         FFIndex: req.FFIndex,
