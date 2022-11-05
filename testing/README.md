@@ -1,10 +1,8 @@
-# Testing
-
 ## JMeter
 
 For the testing process of our software we used [JMeter](https://jmeter.apache.org/).
 
-More specifically, we set JMeter as a proxy server while browsing our [web application](https://saas2022-19.web.app/) and we captured the http(s) requests triggered by the usage of the UI with the help of [JMeter Script Recorder](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html). Then after capturing all the traffic produced, we ran simultaneously the requests related to a specific front-end action (requests produced by extending a plan, adding a new ATL chart etc). The number of threads running the test was initially set to 10000, but it ended up being 1000 for each request to avoid extra 
+More specifically, we set JMeter as a proxy server while browsing our [Web Application](https://saas2022-19.web.app/) and we captured the http(s) requests triggered by the usage of the UI with the help of [JMeter Script Recorder](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html). Then after capturing all the traffic produced, we ran simultaneously the requests related to a specific front-end action (requests produced by extending a plan, adding a new ATL chart etc). The number of threads running the test was initially set to 10000, but it ended up being 1000 for each request to avoid extra 
 billing on firebase. Finally, after succesfully running the tests for each front-end action, we simulated the complete scenario (all the http requests produced based on the usage of the web application, with the implementation of think time as well) with number of threads again set on 1000. All the tests were **successful with 0% Error.**
   
 ## Script folder
