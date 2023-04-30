@@ -22,11 +22,11 @@ We have developed a **SaaS web application**, [**Energy Live 2022**](https://saa
 ## Tools
 For the development of the application, we used the following tools:
 
-* Design and architecture: **Visual Paradigm CE**
-* Development: **Node.js**, **Express.js**, **React.js**, **Recharts**, **Google Firebase**
-* Source code and agile project management: **GitHub**
-* Deployment: **Google Cloud Firestore**, **Google Firebase Hosting**, **Google Cloud Run**
-* Testing: **jMeter**
+* Design and architecture: [**Visual Paradigm CE**](https://www.visual-paradigm.com/download/community.jsp)
+* Development: [**Node.js**](https://nodejs.org/en), [**Express.js**](https://expressjs.com/), [**React.js**](https://react.dev/), [**Recharts**](https://recharts.org/en-US/), [**Google Firebase**](https://firebase.google.com/)
+* Source code and agile project management: [**GitHub**](https://github.com/)
+* Deployment: [**Google Cloud Firestore**](https://firebase.google.com/docs/firestore), [**Google Firebase Hosting**](https://firebase.google.com/docs/hosting), [**Google Cloud Run**](https://cloud.google.com/run)
+* Testing: [**jMeter**](https://jmeter.apache.org/)
 
 ## Agile Software Development
 For the development of our web application, we used the Scrum framework. The development was split into 3 main sprints.
