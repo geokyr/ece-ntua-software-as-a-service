@@ -3,30 +3,30 @@
 Semester Project for the [**Software-as-a-Service Technologies**](https://www.ece.ntua.gr/en/undergraduate/courses/3399) course, during the 8th semester of the **School of Electrical and Computer Engineering at the National Technical University of Athens**.
 
 ## Team 19 - Members
-* [**Angelis Georgios**](https://github.com/ag-george)
-* [**Garos Apostolis**](https://github.com/ApostolisGaros)
-* [**Kyriakopoulos Georgios**](https://github.com/geokyr)
-* [**Tzelepis Serafeim**](https://github.com/sertze)
-* [**Vlachakis Nikos**](https://github.com/NikosVlachakis)
+- [**Angelis Georgios**](https://github.com/ag-george)
+- [**Garos Apostolis**](https://github.com/ApostolisGaros)
+- [**Kyriakopoulos Georgios**](https://github.com/geokyr)
+- [**Tzelepis Serafeim**](https://github.com/sertze)
+- [**Vlachakis Nikos**](https://github.com/NikosVlachakis)
 
 
 ## Project Description
 We have developed a **SaaS web application**, [**Energy Live 2022**](https://saas2022-19.web.app), that allows users to **monitor electricity market prices in Europe through their browser**. The data, which is made available as open data, will be collected automatically by the application, through an API connection, and will be displayed on the website as a **chart**. Users must have a **valid paid subscription** to the application to be able to use it. 
 
 ## Supported Functions
-* Selection of energy market quantity (Actual total load, Generation per type, Cross border flows), country and, if applicable, other parameters, as well as the starting date of the visualisation
-* Display of the values of the quantity in a chart, starting from the selected date and ending at the current date, with the option to update the chart when new data are added
-* Option to download the data in a CSV file, or download the chart image
-* Sign in via the "Sign in with Google" service
+- Selection of energy market quantity (Actual total load, Generation per type, Cross border flows), country and, if applicable, other parameters, as well as the starting date of the visualisation
+- Display of the values of the quantity in a chart, starting from the selected date and ending at the current date, with the option to update the chart when new data are added
+- Option to download the data in a CSV file, or download the chart image
+- Sign in via the "Sign in with Google" service
 
 ## Tools
 For the development of the application, we used the following tools:
 
-* Design and architecture: [**Visual Paradigm CE**](https://www.visual-paradigm.com/download/community.jsp)
-* Development: [**Node.js**](https://nodejs.org/en), [**Express.js**](https://expressjs.com/), [**React.js**](https://react.dev/), [**Recharts**](https://recharts.org/en-US/), [**Google Firebase**](https://firebase.google.com/)
-* Source code and agile project management: [**GitHub**](https://github.com/)
-* Deployment: [**Google Cloud Firestore**](https://firebase.google.com/docs/firestore), [**Google Firebase Hosting**](https://firebase.google.com/docs/hosting), [**Google Cloud Run**](https://cloud.google.com/run)
-* Testing: [**jMeter**](https://jmeter.apache.org/)
+- Design and architecture: [**Visual Paradigm CE**](https://www.visual-paradigm.com/download/community.jsp)
+- Development: [**Node.js**](https://nodejs.org/en), [**Express.js**](https://expressjs.com/), [**React.js**](https://react.dev/), [**Recharts**](https://recharts.org/en-US/), [**Google Firebase**](https://firebase.google.com/)
+- Source code and agile project management: [**GitHub**](https://github.com/)
+- Deployment: [**Google Cloud Firestore**](https://firebase.google.com/docs/firestore), [**Google Firebase Hosting**](https://firebase.google.com/docs/hosting), [**Google Cloud Run**](https://cloud.google.com/run)
+- Testing: [**jMeter**](https://jmeter.apache.org/)
 
 ## Agile Software Development
 For the development of our web application, we used the Scrum framework. The development was split into 3 main sprints.
@@ -69,12 +69,12 @@ export default app;
 ```
 
 For the Firebase Admin SDK, generate a new private key [here](https://console.firebase.google.com/u/0/project/saas2022-19/settings/serviceaccounts/adminsdk) and place it under all the following folders:
-* `/agpt-send-data/config/`
-* `/agpt-update-DB/config/`
-* `/atl-send-data/config/`
-* `/atl-update-DB/config/`
-* `/ff-send-data/config/`
-* `/ff-update-DB/config/`
-* `/handle-plan/config/`
-* `/login-session/config/`
-* `/orchestrator/config/`
+- `/agpt-send-data/config/`
+- `/agpt-update-DB/config/`
+- `/atl-send-data/config/`
+- `/atl-update-DB/config/`
+- `/ff-send-data/config/`
+- `/ff-update-DB/config/`
+- `/handle-plan/config/`
+- `/login-session/config/`
+- `/orchestrator/config/`
