@@ -1,19 +1,17 @@
-# NTUA ECE Software as a Service 2022 Project
-  
-[**Energy Live 2022**](https://saas2022-19.web.app)
+# ntua-software-as-a-service
 
-This is our project for the Software as a Service course of the 8th semester at the National Technical University of Athens.
-It is available on the link provided above.
+Semester Project for the [**Software-as-a-Service Technologies**](https://www.ece.ntua.gr/en/undergraduate/courses/3399) course, during the 8th semester of the **School of Electrical and Computer Engineering at the National Technical University of Athens**.
 
 ## Team 19 - Members
 * [**Angelis Georgios**](https://github.com/ag-george)
 * [**Garos Apostolis**](https://github.com/ApostolisGaros)
-* [**Kyriakopoulos George**](https://github.com/geokyr)
+* [**Kyriakopoulos Georgios**](https://github.com/geokyr)
 * [**Tzelepis Serafeim**](https://github.com/sertze)
 * [**Vlachakis Nikos**](https://github.com/NikosVlachakis)
 
+
 ## Project Description
-We have developed a SaaS web application, called Energy Live 2022, that allows users to monitor electricity market prices in Europe through their browser. The data, which is made available as open data, will be collected automatically by the application, through an API connection, and will be displayed on the website as a chart. Users must have a valid paid subscription to the application to be able to use it. 
+We have developed a **SaaS web application**, [**Energy Live 2022**](https://saas2022-19.web.app), that allows users to **monitor electricity market prices in Europe through their browser**. The data, which is made available as open data, will be collected automatically by the application, through an API connection, and will be displayed on the website as a **chart**. Users must have a **valid paid subscription** to the application to be able to use it. 
 
 ## Supported Functions
 * Selection of energy market quantity (Actual total load, Generation per type, Cross border flows), country and, if applicable, other parameters, as well as the starting date of the visualisation
@@ -40,18 +38,18 @@ We used Google Cloud Firestore, Google Firebase Hosting and Google Cloud Run to 
 
 The NoSQL database is deployed on the Google Cloud Firestore. Our data is stored, updated and retrieved through the useful tools provided by the framework, using the Node.js SDK.
 
-The web application is deployed on Google Firebase Hosting. The link for our web application is provided on the [start of this README](https://github.com/geokyr/saas2022-19#ntua-ece-software-as-a-service-2022-project). This was done through the Firebase CLI (and npm) using the following commands under the ```/frontend``` directory:
+The web application is deployed on Google Firebase Hosting. The link for our web application is available at the top of this README. This was done through the Firebase CLI (and npm) using the following commands under the `/frontend` directory:
 
 ```
-$ firebase init
-$ npm run build
-$ firebase deploy
+firebase init
+npm run build
+firebase deploy
 ```
 
-The microservices were deployed on the Google Cloud Run service. Each microservice was deployed as a separate service, inside a container and running on a specific port, specified in each ```/microservice-directory/config/dev.env``` PORT variable. This was done through the GCloud CLI using the following command for each microservice (region is set to "europe-west3"):
+The microservices were deployed on the Google Cloud Run service. Each microservice was deployed as a separate service, inside a container and running on a specific port, specified in each `/microservice-directory/config/dev.env` PORT variable. This was done through the GCloud CLI using the following command for each microservice (region is set to "europe-west3"):
 
 ```
-$ gcloud run deploy --source microservice-directory --port PORT
+gcloud run deploy --source microservice-directory --port PORT
 ```
 
 ## Setup - Keys
