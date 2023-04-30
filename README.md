@@ -9,7 +9,6 @@ Semester Project for the [**Software-as-a-Service Technologies**](https://www.ec
 - [**Tzelepis Serafeim**](https://github.com/sertze)
 - [**Vlachakis Nikos**](https://github.com/NikosVlachakis)
 
-
 ## Project Description
 We have developed a **SaaS web application**, [**Energy Live 2022**](https://saas2022-19.web.app), that allows users to **monitor electricity market prices in Europe through their browser**. The data, which is made available as open data, will be collected automatically by the application, through an API connection, and will be displayed on the website as a **chart**. Users must have a **valid paid subscription** to the application to be able to use it. 
 
