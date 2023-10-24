@@ -3,11 +3,11 @@
 Semester Project for the [Software-as-a-Service Technologies](https://www.ece.ntua.gr/en/undergraduate/courses/3399) course, during the 8th semester of the School of Electrical and Computer Engineering at the National Technical University of Athens.
 
 ## Team 19 - Members
-- [Angelis Georgios](https://github.com/ag-george)
-- [Garos Apostolis](https://github.com/ApostolisGaros)
-- [Kyriakopoulos Georgios](https://github.com/geokyr)
-- [Tzelepis Serafeim](https://github.com/sertze)
-- [Vlachakis Nikos](https://github.com/NikosVlachakis)
+- [Apostolis Garos](https://github.com/ApostolisGaros)
+- [Georgios Angelis](https://github.com/GeorgeAngelis)
+- [Georgios Kyriakopoulos](https://github.com/geokyr)
+- [Nikos Vlachakis](https://github.com/NikosVlachakis)
+- [Serafeim Tzelepis](https://github.com/sertze)
 
 ## Project Description
 We have developed a SaaS web application, [Energy Live 2022](https://saas2022-19.web.app), that allows users to monitor electricity market prices in Europe through their browser. The data, which is made available as open data, will be collected automatically by the application, through an API connection, and will be displayed on the website as a chart. Users must have a valid paid subscription to the application to be able to use it. 
