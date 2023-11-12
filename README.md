@@ -1,4 +1,4 @@
-# ece-ntua-software-as-a-service-technologies
+# software-as-a-service-technologies
 
 Semester Project for the [Software-as-a-Service Technologies](https://www.ece.ntua.gr/en/undergraduate/courses/3399) course, during the 8th semester of the School of Electrical and Computer Engineering at the National Technical University of Athens.
 
